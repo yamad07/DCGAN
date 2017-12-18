@@ -4,6 +4,7 @@ import os
 import random
 import torch
 import torch.nn as nn
+import torch.nn.functional as F
 import torch.nn.parallel
 import torch.backends.cudnn as cudnn
 import torch.optim as optim
@@ -35,6 +36,7 @@ class Generator(nn.Module):
             nn.ConvTranspose2d(ngf * 4, ngf * 2, 4, 2, 1, bias=False),
             nn.BatchNorm2d(ngf * 2),
             nn.LeakyReLU(0.2, inplace=True),
+            F.dropout2d()
 
             nn.ConvTranspose2d(ngf * 2,     ngf, 4, 2, 1, bias=False),
             nn.BatchNorm2d(ngf),
