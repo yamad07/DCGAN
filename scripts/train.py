@@ -143,7 +143,7 @@ for epoch in range(opt.niter):
             D_x = output.data.mean()
 
             # train with fake
-            noise.resize_(batch_size, nz, 1, 1).normal_(0, 1)
+            noise.resize_(batch_size, nz, 1, 1).normal_(-1, 1)
             noisev = Variable(noise)
             fake = netG(noisev)
             labelv = Variable(label.fill_(fake_label))
