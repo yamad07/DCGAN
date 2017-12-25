@@ -133,7 +133,7 @@ for epoch in range(opt.niter):
             if opt.cuda:
                 real_cpu = real_cpu.cuda()
             input.resize_as_(real_cpu).copy_(real_cpu)
-            label.resize_(batch_size).uniform_(0.7, 1.2)
+            label.resize_(batch_size).fill_(real_label)
             inputv = Variable(input)
             labelv = Variable(label)
 
@@ -143,7 +143,7 @@ for epoch in range(opt.niter):
             D_x = output.data.mean()
 
             # train with fake
-            noise.resize_(batch_size, nz, 1, 1).normal_(0, 1)
+            noise.resize_(batch_size, nz, 1, 1).fill_(fake_label)
             noisev = Variable(noise)
             fake = netG(noisev)
             labelv = Variable(label.uniform_(0.0, 0.3))
