@@ -102,7 +102,7 @@ criterion = nn.BCELoss()
 
 input = torch.FloatTensor(opt.batchSize, 3, opt.imageSize, opt.imageSize)
 noise = torch.FloatTensor(opt.batchSize, nz, 1, 1)
-fixed_noise = torch.FloatTensor(opt.batchSize, nz, 1, 1).normal_(-1, 1)
+fixed_noise = torch.FloatTensor(opt.batchSize, nz, 1, 1).normal_(0, 1)
 label = torch.FloatTensor(opt.batchSize)
 real_label = 1
 fake_label = 0
@@ -117,7 +117,7 @@ if opt.cuda:
 fixed_noise = Variable(fixed_noise)
 
 # setup optimizer
-optimizerD = optim.Adam(netD.parameters(), lr=opt.lr, betas=(opt.beta1, 0.999))
+optimizerD = optim.SGD(netD.parameters(), lr=opt.lr)
 optimizerG = optim.Adam(netG.parameters(), lr=opt.lr, betas=(opt.beta1, 0.999))
 
 for epoch in range(opt.niter):
@@ -133,7 +133,7 @@ for epoch in range(opt.niter):
             if opt.cuda:
                 real_cpu = real_cpu.cuda()
             input.resize_as_(real_cpu).copy_(real_cpu)
-            label.resize_(batch_size).fill_(real_label)
+            label.resize_(batch_size).uniform_(0.7, 1.2)
             inputv = Variable(input)
             labelv = Variable(label)
 
@@ -143,10 +143,10 @@ for epoch in range(opt.niter):
             D_x = output.data.mean()
 
             # train with fake
-            noise.resize_(batch_size, nz, 1, 1).normal_(-1, 1)
+            noise.resize_(batch_size, nz, 1, 1).normal_(0, 1)
             noisev = Variable(noise)
             fake = netG(noisev)
-            labelv = Variable(label.fill_(fake_label))
+            labelv = Variable(label.uniform_(0.0, 0.3))
             output = netD(fake.detach())
             errD_fake = criterion(output, labelv)
             errD_fake.backward()
