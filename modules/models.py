@@ -36,7 +36,6 @@ class Generator(nn.Module):
             nn.ConvTranspose2d(ngf * 4, ngf * 2, 4, 2, 1, bias=False),
             nn.BatchNorm2d(ngf * 2),
             nn.LeakyReLU(0.2, inplace=True),
-            F.dropout2d(),
             nn.ConvTranspose2d(ngf * 2,     ngf, 4, 2, 1, bias=False),
             nn.BatchNorm2d(ngf),
             nn.LeakyReLU(0.2, inplace=True),
