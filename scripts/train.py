@@ -138,7 +138,6 @@ for epoch in range(opt.niter):
             labelv = Variable(label)
 
             output = netD(inputv)
-            print(labelv)
             errD_real = criterion(output, labelv)
             errD_real.backward()
             D_x = output.data.mean()
