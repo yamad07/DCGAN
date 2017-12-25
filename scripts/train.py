@@ -102,7 +102,7 @@ criterion = nn.BCELoss()
 
 input = torch.FloatTensor(opt.batchSize, 3, opt.imageSize, opt.imageSize)
 noise = torch.FloatTensor(opt.batchSize, nz, 1, 1)
-fixed_noise = torch.FloatTensor(opt.batchSize, nz, 1, 1).normal_(0, 1)
+fixed_noise = torch.FloatTensor(opt.batchSize, nz, 1, 1).normal_(-1, 1)
 label = torch.FloatTensor(opt.batchSize)
 real_label = 1
 fake_label = 0
@@ -138,6 +138,7 @@ for epoch in range(opt.niter):
             labelv = Variable(label)
 
             output = netD(inputv)
+            print(labelv)
             errD_real = criterion(output, labelv)
             errD_real.backward()
             D_x = output.data.mean()
