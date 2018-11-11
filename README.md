@@ -2,7 +2,7 @@
 DCGAN Implementation by Pytorch
 
 ## Usage
-you have to get same images and save in './data/'.
+you have to get same images and save in `./data/`.
 
 ```
 python experiment.py
