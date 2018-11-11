@@ -72,5 +72,5 @@ class Trainer(object):
                             normalize=True)
                     fake = self.generator(fixed_noise)
                     vutils.save_image(fake.data,
-                            'results/fake_samples_epoch_%03d.png' % epoch,
+                            'results/fake_samples_epoch_%03d.png' % e,
                             normalize=True)

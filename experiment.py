@@ -32,6 +32,6 @@ trainer = Trainer(
         )
 trainer.train(
         lr=0.0001,
-        epoch=100,
+        epoch=1000,
         dataloader=dataloader
         )
